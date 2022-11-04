@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四则运算器</title>
+</head>
+<style>
+    div {
+        margin-top: 220px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div>
+        num1: <input type="text" id="num1">
+        <br>
+        num2: <input type="text" id="num2">
+        <br>
+        运算符:
+        <input type="button" value="+" onClick="jsq('+')">
+        <input type="button" value="-" onClick="jsq('-')">
+        <input type="button" value="*" onClick="jsq('*')">
+        <input type="button" value="/" onClick="jsq('/')">
+        <br>
+        结果:&nbsp;&nbsp;&nbsp;<input type="text" id="ans">
+    </div>
+    <script type="text/javascript">
+        function jsq(op) {
+            var a = parseFloat(document.getElementById("num1").value);
+            var b = parseFloat(document.getElementById("num2").value);
+
+            switch (op) {
+                case "+":
+                    document.getElementById("ans").value = a + b;
+                    break;
+                case "-":
+                    document.getElementById("ans").value = a - b;
+                    break;
+                case "*":
+                    document.getElementById("ans").value = a * b;
+                    break;
+                case "/":
+                    if (b == 0) {
+                        alert("除数不能为0");
+                    } else {
+                        document.getElementById("ans").value = Math.round((a / b) * 100) / 100;//保留两位小数
+                    }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        span {
+            display: inline-block;
+            width: 250px;
+            height: 30px;
+            vertical-align: middle;
+            line-height: 30px;
+            padding-left: 15px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .right {
+            color: green;
+        }
+
+        textarea {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="timer" style="float: right;">
+        <span></span>
+    </div>
+
+
+    姓名: <input type="text" class="name" name="name" placeholder="请输入姓名" id="name">
+    <span></span>
+    <br>
+    <br>
+    年龄:<select class="age">
+        <option>--请选择以下选项--</option>
+
+    </select>
+    <br>
+    <br>
+
+    <div class="sex">
+        性别:
+        <input type="radio" name="sex" value="男">男
+        <input type="radio" name="sex" value="女">女
+    </div>
+    <br>
+    <div class="select">
+        学院:
+        <select id="sel1" onchange="selectProv()">
+            <option value="">请选择学院</option>
+            <option value="0">信息学院</option>
+            <option value="1">机械学院</option>
+            <option value="2">艺术学院</option>
+
+        </select>
+        <br>
+        <br>
+        专业:
+        <select id="sel2">
+            <option value="">请选择专业</option>
+        </select>
+    </div>
+    <br>
+    <div class="habit">
+        <form action="" method="post" name="formName">
+            爱好：
+            <input type="checkbox" name="hobby" value="吃">吃
+            <input type="checkbox" name="hobby" value="喝">喝
+            <input type="checkbox" name="hobby" value="睡">睡
+        </form>
+    </div>
+    <br>
+    <div class="phone">
+        电话号码: <input type="text" name="phone" placeholder="请输入电话号码" id="phone">
+        <span></span>
+    </div>
+    <br>
+
+    <div class="email">
+        电子邮箱: <input type="text" name="email" placeholder="请输入电子邮箱" id="email">
+        <span></span>
+    </div>
+    <br>
+    简介:
+    <textarea cols="30" rows="10" maxlength="40" id="jianjie" class="remark"> </textarea>
+    <label>
+        <i class="residue">0</i>/40
+    </label>
+    <br><br>
+
+
+    <div>
+        <button class="btn">立即注册</button>
+    </div>
+
+
+
+
+
+    <script>
+        //姓名
+        let name = document.getElementById('name')
+        let spanname = name.nextElementSibling
+        let residue = document.querySelector(".residue")
+        name.addEventListener('blur', function () {
+            if (/^[a-zA-Z0-9-_]{0,10}$/.test(name.value)) {
+                spanname.className = 'right'
+                spanname.innerHTML = '输入正确'
+            } else {
+                spanname.className = 'error'
+                spanname.innerHTML = '姓名不能超过10个字符'
+            }
+        })
+        //年龄
+
+        let age = document.querySelector(".age")
+        function add() {
+            for (let i = 18; i <= 28; i++) {
+                let option = document.createElement('option')
+                option.innerHTML = `${i}`
+                age.appendChild(option)
+            }
+        }
+        add()
+
+        //选择框
+        var arrs = [];
+        arrs[0] = ["软件工程", "数字媒体技术", "计算机与科学"];
+        arrs[1] = ["车辆工程", "机械类", "智能制造工程"];
+        arrs[2] = ["设计学类", "工业设计", "环境设计"];
+
+        function selectProv() {
+            var xy = document.getElementById('sel1').value;
+            var str = "<option value=''>请选择专业</option>";
+            if (xy != "") {
+                var zy = arrs[xy];
+                for (var i = 0; i < zy.length; i++)
+                    str += "<option value=''>" + zy[i] + "</option>";
+            }
+            document.getElementById("sel2").innerHTML = str;
+        }
+        //电话号码
+        let phone = document.getElementById('phone')
+        let spanphone = phone.nextElementSibling
+        phone.addEventListener('blur', function () {
+            if (/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(phone.value)) {
+                spanphone.className = 'right'
+                spanphone.innerHTML = '输入正确'
+            } else {
+                spanphone.className = 'error'
+                spanphone.innerHTML = '输入错误'
+            }
+        })
+
+        //电子邮箱
+        let email = document.getElementById('email')
+        let spanemail = email.nextElementSibling
+        email.addEventListener('blur', function () {
+            if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email.value)) {
+                spanemail.className = 'right'
+                spanemail.innerHTML = '输入正确'
+            } else {
+                spanemail.className = 'error'
+                spanemail.innerHTML = '输入错误'
+            }
+        })
+
+
+        //备注
+        let remark = document.querySelector(".remark")
+        remark.oninput = function () {
+            let text = remark.value
+            residue.innerHTML = `${text.length}`
+        }
+
+
+
+        //按钮提交
+        let btn = document.querySelector(".btn")
+        let sex1 = document.getElementsByName("sex")
+        let hobby1 = document.getElementsByName("hobby")
+        let sex = ""
+        let hobby = ""
+
+        function select(obj) {
+            let text = ""
+            for (let i = 0; i < obj.length; i++) {
+                if (obj[i].checked) {
+                    text = text + " " + obj[i].value
+                }
+            }
+            return text;
+
+        }
+
+        btn.onclick = function () {
+            let name = document.querySelector(".name")
+            let xy = document.getElementById("sel1")
+            let zy = document.getElementById("sel2")
+            let phone = document.getElementById("phone")
+            let email = document.getElementById("email")
+            let jianjie = document.getElementById("jianjie")
+
+            var xyindex = xy.selectedIndex;
+            var xytext = xy.options[xyindex].text;
+            var zyindex = zy.selectedIndex;
+            var zytext = zy.options[zyindex].text;
+
+
+            let parent = btn.parentNode
+            let p = document.createElement('p')
+            sex = select(sex1)
+            hobby = select(hobby1)
+            p.innerHTML = ` 
+            注册信息如下：
+            <br>
+            姓名：${name.value}<br> 性别：${sex} <br>年龄：${age.value}<br> 爱好：${hobby} <br>
+            学院：${xytext} <br>专业：${zytext}<br> 电话号码：${phone.value} <br>
+            电子邮件：${email.value}<br> 备注：${jianjie.value}
+            `
+            parent.appendChild(p)
+        }
+
+        //时间
+        let show = document.querySelector(".timer span")
+
+        let timer = setInterval(function () {
+            let date = new Date()
+            let y = date.getFullYear()
+            let m = date.getMonth() + 1
+            let d = date.getDate()
+            let h = date.getHours()
+            let mi = date.getMinutes()
+            let s = date.getSeconds()
+            show.innerHTML = `${y}年${m}月${d}日 ${h}：${mi}：${s}`
+        }, 1000)
+    </script>
+
+
+
+</body>
+
+</html>
